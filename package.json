@@ -1,0 +1,29 @@
+{
+  "name": "aula-middleware",
+  "version": "1.0.0",
+  "description": "My first middleware server",
+  "main": "server-middleware.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "middleware",
+    "server-side",
+    "javascript"
+  ],
+  "author": "EWB",
+  "license": "ISC",
+  "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.5",
+    "body-parser": "^1.20.2",
+    "connect-flash": "^0.1.1",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "express-session": "^1.17.3",
+    "express-validator": "^7.0.1",
+    "handlebars": "^4.7.7",
+    "mysql2": "^3.6.0",
+    "path": "^0.12.7",
+    "sequelize": "^6.32.1"
+  }
+}
