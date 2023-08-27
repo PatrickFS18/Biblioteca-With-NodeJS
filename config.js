@@ -3,7 +3,7 @@ module.exports = {
     development: {
       username: 'root',    
       password: 'mysqluser', 
-      database: 'Biblioteca', 
+      database: 'biblioteca', 
       host: 'localhost',    
       dialect: 'mysql'
     }

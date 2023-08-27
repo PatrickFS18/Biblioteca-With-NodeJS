@@ -5,19 +5,30 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    nome: {
+    titulo: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    salario_bruto: {
-      type: DataTypes.DOUBLE,
+    autores: {
+      type: DataTypes.STRING,
       allowNull: false
     },
-    departamento: {
+    ano: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    editora: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    possuidor: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    qntdisponivel:{
       type: DataTypes.INTEGER,
       allowNull: false
     }
-
   });
   livros.sync ({force:true})
   return livros;
