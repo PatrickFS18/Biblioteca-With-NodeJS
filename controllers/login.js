@@ -3,12 +3,11 @@ const usuario = require( "../models/usuario" )(sequelize, Sequelize); // Passand
 
 // Resto do código do controller...
 
+exports.home = (req, res) => {
+
+    res.render("login", { layout: false });
+};
 exports.login = (req, res) => {
 
-
-
-
-
-
-  res.render("initial-page", { layout: false });
+    res.render("login", { layout: false });
 };
