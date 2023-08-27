@@ -31,7 +31,7 @@ exports.register = async (req, res) => {
     });
 
     // Redirecionar ou renderizar a página de sucesso
-    res.render("home", { user: newUser });
+    res.render("login", { user: newUser });
   } catch (error) {
     console.error("Erro ao registrar usuário:", error);
     res.render("register", { errorMessage: "Erro ao registrar usuário." });

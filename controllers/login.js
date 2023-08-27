@@ -21,7 +21,7 @@ exports.login = async (req, res) => {
       }
   
       // Se as credenciais estiverem corretas, redirecione para a página de dashboard
-      res.redirect("/");
+      res.render("home", { layout: false });
     } catch (error) {
       console.error("Erro ao processar o login:", error);
       res.render("login", { errorMessage: "Erro ao processar o login." });
