@@ -1,7 +1,7 @@
 const { sequelize, Sequelize } = require("../config/connection"); // Certifique-se de importar Sequelize
 const livros = require("../models/livro")(sequelize, Sequelize); // Passando os parâmetros necessários
 const usuario = require("../models/usuario")(sequelize, Sequelize); // Passando os parâmetros necessários
-
+const { Op } = require('sequelize');
 // Resto do código do controller...
 
 exports.home = (req, res) => {
@@ -13,15 +13,21 @@ exports.adicionar_home = (req, res) => {
 };
 exports.administrar_home = async (req, res) => {
     try {
-        const usuarios = await usuario.findAll();
-        const livro = await livros.findAll();
-        res.render("administrar", { layout: false, usuarios, livro });
+      const usuarios = await usuario.findAll({
+        where: {
+          nome: {
+            [Op.ne]: 'admin' // Seleciona todos os usuários cujo papel não é 'admin'
+          }
+        }
+      });
+      const livro = await livros.findAll();
+  
+      res.render("administrar", { layout: false, usuarios, livro });
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Ocorreu um erro ao carregar os dados');
+      console.error(error);
+      res.status(500).send('Ocorreu um erro ao carregar os dados');
     }
-};
-
+  };
 
 exports.adicionar_livro = async (req, res) => {
     try {

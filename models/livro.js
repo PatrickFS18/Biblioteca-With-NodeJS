@@ -30,6 +30,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   });
-  livros.sync ({force:true})
+ // livros.sync ({force:true})
   return livros;
 };

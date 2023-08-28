@@ -7,14 +7,14 @@ const login = require("../controllers/login");
 const register = require("../controllers/register");
 const admin = require("../controllers/admin");
 
-router.get("/", login.home);
-router.get("/register", register.home);
-router.get("/home",myController.home);
+router.get("/", login.home); // "/" é login
+ router.get("/register", register.home); // "/register" é registro
+router.get("/home",myController.exibirLivros); // "/home" é logado
 
 router.get("/adicionar_livro", admin.adicionar_home);
 router.get("/administrar", admin.administrar_home);
 
-router.post("/login",login.login);
+router.post("/home",login.login);
 router.post("/register",register.register);
 
 router.post("/adicionar_livro", admin.adicionar_livro);

@@ -1,0 +1,83 @@
+<html>
+
+  <head>
+    <title>Dashboard</title>
+    <style>
+      /* Estilos para o corpo da página */ body { font-family: Arial,
+      sans-serif; margin: 0; padding: 0; background-color: #f4f4f4;
+      justify-content: center; } /* Estilos para o cabeçalho (navbar) */ .navbar
+      { background-color: #333; overflow: hidden; } .navbar a { float: left;
+      display: block; color: white; text-align: center; padding: 14px 16px;
+      text-decoration: none; } .navbar a:hover { background-color: #ddd; color:
+      black; } /* Estilos para o conteúdo da página */ .content { padding: 20px;
+      } .container { background-color: #fff; padding: 20px; border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); width: 400px; } .container h1 {
+      margin-top: 0; } .form-group { margin-bottom: 15px; } label { font-weight:
+      bold; } input[type="text"], input[type="number"] { width: 100%; padding:
+      10px; border: 1px solid #ccc; border-radius: 3px; } input[type="submit"] {
+      background-color: #007bff; color: #fff; border: none; padding: 10px 20px;
+      border-radius: 3px; cursor: pointer; } input[type="submit"]:hover {
+      background-color: #0056b3; }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+
+  </head>
+
+  <body>
+    <div class="navbar">
+      <a href="/home">Home</a>
+      <a href="/search" style="margin-left: -50em;">Buscar</a>
+
+      <a href="/"> <b style="color:red">Logout</b> </a>
+    </div>
+
+    
+    <div class="container">
+        <div style="text-align: center;margin-bottom:5em">
+              <h1 class="mt-4">Lista de Livros</h1>
+</div>
+
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Título</th>
+            <th scope="col">Ano</th>
+            <th scope="col">Quantidade Disponível</th>
+            <th scope="col">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each livro}}
+            <tr>
+              <td>{{titulo}}</td>
+              <td>{{ano}}</td>
+              <td>{{qntdisponivel}}</td>
+              <td>
+                {{#if qntdisponivel}}
+                  <button
+                    class="btn btn-primary"
+                    onclick="alugarLivro('{{id}}')"
+                  >Alugar</button>
+                {{else}}
+                  <span class="text-danger">Não Disponível</span>
+                {{/if}}
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Inclua o link para o arquivo JS do Bootstrap (opcional) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    ></script>
+    
+
+  </body>
+
+</html>

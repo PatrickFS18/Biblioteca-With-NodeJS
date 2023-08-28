@@ -133,14 +133,13 @@
 
 <body>
     <div class="navbar">
-        <a href="">Home</a>
+        <a href="/home">Home</a>
         <a href="/adicionar_livro">Adicionar Livros</a>
         <a href="/administrar">Administrar</a>
         <a href="/"> <b style="color:red">Logout</b> </a>
     </div>
 
     <h1>Painel de Administração</h1>
-    <p>ok</p>
     <table>
         <thead>
             <tr>
@@ -151,6 +150,7 @@
         </thead>
         <tbody>
             {{#each usuarios}}
+
             <tr>
                 <td>{{nome}}</td>
                 <td>{{email}}</td>

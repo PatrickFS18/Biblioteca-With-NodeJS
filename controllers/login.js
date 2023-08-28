@@ -19,9 +19,15 @@ exports.login = async (req, res) => {
       if (!user || !(await bcrypt.compare(senha, user.senha))) {
         return res.render("login", { errorMessage: "Credenciais inválidas." });
       }
-  
-      // Se as credenciais estiverem corretas, redirecione para a página de dashboard
-      res.render("home", { layout: false });
+      
+      // Se as credenciais estiverem corretas, redirecione para a página home
+
+      if(user.nome=="admin"){
+        res.render("home", { layout: false });
+      }else{
+        res.render("home_user", { layout: false });
+
+      }
     } catch (error) {
       console.error("Erro ao processar o login:", error);
       res.render("login", { errorMessage: "Erro ao processar o login." });

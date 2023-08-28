@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       }
     });
-    usuario.sync ({force:true})
+  //  usuario.sync ({force:true})
     return usuario;
   };
   

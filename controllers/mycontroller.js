@@ -4,6 +4,18 @@ const livros = require("../models/livro")(sequelize, Sequelize); // Passando os 
 // Resto do código do controller...
 
 exports.home = (req, res) => {
-  res.render("home", { layout: false });
+  // se for admin vv
+    res.render("home", { layout: false });
+  //se nao:
+  //res.render("home_user", { layout: false });
 };
 
+exports.exibirLivros = async (req, res) => {
+  try {
+    const livro = await livros.findAll();
+    res.render('home_user', { livro });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Erro ao carregar os livros');
+  }
+};
