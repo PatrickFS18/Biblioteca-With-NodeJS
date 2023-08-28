@@ -37,9 +37,11 @@
 
   <body>
 
-
+{{#if errorMessage}}
       <div class="alert alert-danger" role="alert">
-            {{errorMessage}}
+           {{errorMessage}}
+     
+            {{/if}}
 </div>
 
 
@@ -99,7 +101,7 @@
                   />
                 </div>
                 <div id="register-link" class="text-right">
-                  <a href="/login" class="text-info">Já tem cadastro?</a>
+                  <a href="/" class="text-info">Já tem cadastro?</a>
                 </div>
               </form>
             </div>
