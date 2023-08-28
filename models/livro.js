@@ -21,15 +21,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    possuidor: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     qntdisponivel:{
       type: DataTypes.INTEGER,
       allowNull: false
     }
   });
- // livros.sync ({force:true})
+  //livros.sync ({force:true})
   return livros;
 };

@@ -32,14 +32,12 @@ exports.administrar_home = async (req, res) => {
 exports.adicionar_livro = async (req, res) => {
     try {
         const { titulo, autores, ano, editora, qntdisponivel } = req.body;
-        possuidor = "vazio";
         // Criação do livro no banco de dados
         await livros.create({
             titulo,
             autores,
             ano,
             editora,
-            possuidor,
             qntdisponivel
         });
 
