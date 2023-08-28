@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 
 exports.home = (req, res) => {
 
-    res.render("login", { layout: false });
+    res.render("login");
 };
 
 exports.login = async (req, res) => {
