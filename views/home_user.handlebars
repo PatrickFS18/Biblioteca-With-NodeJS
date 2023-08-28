@@ -28,7 +28,7 @@
 
   <body>
     <div class="navbar">
-      <a href="/home">Home</a>
+        <a href="/login">Home</a>
       <a href="/search" style="margin-left: -50em;">Buscar</a>
 
       <a href="/"> <b style="color:red">Logout</b> </a>
@@ -37,7 +37,7 @@
     
     <div class="container">
         <div style="text-align: center;margin-bottom:5em">
-              <h1 class="mt-4">Lista de Livros</h1>
+              <h1 class="mt-4">Biblioteca</h1>
 </div>
 
 
@@ -58,25 +58,29 @@
               <td>{{qntdisponivel}}</td>
               <td>
                 {{#if qntdisponivel}}
+                <form action="/alugar_livro/{{ this.id }}" method="post">
                   <button
                     class="btn btn-primary"
-                    onclick="alugarLivro('{{id}}')"
+                    onclick="alugarLivro('{{this.id}}')"
                   >Alugar</button>
+                  </form>
                 {{else}}
                   <span class="text-danger">Não Disponível</span>
                 {{/if}}
-              </td>
+              </td>{{#each livros}}
+  
+  </form>
+{{/each}}
             </tr>
           {{/each}}
         </tbody>
       </table>
     </div>
+ <div style="text-align: center;margin-bottom:5em">
+              <h1 class="mt-4">Seus livros</h1>
 
-    <!-- Inclua o link para o arquivo JS do Bootstrap (opcional) -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-    ></script>
-    
+</div>
+   
 
   </body>
 

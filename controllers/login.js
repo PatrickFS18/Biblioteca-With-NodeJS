@@ -1,5 +1,7 @@
 const { sequelize, Sequelize } = require("../config/connection"); // Certifique-se de importar Sequelize
 const usuario = require( "../models/usuario" )(sequelize, Sequelize); // Passando os parâmetros necessários
+const livros = require("../models/livro")(sequelize, Sequelize); // Passando os parâmetros necessários
+
 
 const bcrypt = require("bcrypt");
 
@@ -25,7 +27,8 @@ exports.login = async (req, res) => {
       if(user.nome=="admin"){
         res.render("home", { layout: false });
       }else{
-        res.render("home_user", { layout: false });
+        let livro = await livros.findAll();
+        res.render('home_user', { livro });
 
       }
     } catch (error) {

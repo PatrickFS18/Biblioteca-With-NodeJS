@@ -43,7 +43,7 @@ exports.adicionar_livro = async (req, res) => {
             qntdisponivel
         });
 
-        res.redirect('/home');
+        res.render("adicionarLivro");
     } catch (error) {
         console.error(error);
         res.status(500).send('Ocorreu um erro ao adicionar o livro');

@@ -12,10 +12,43 @@ exports.home = (req, res) => {
 
 exports.exibirLivros = async (req, res) => {
   try {
-    const livro = await livros.findAll();
+    let livro = await livros.findAll();
     res.render('home_user', { livro });
   } catch (error) {
     console.error(error);
     res.status(500).send('Erro ao carregar os livros');
   }
 };
+
+
+
+exports.alugarLivro = async (req, res) => {
+  const livroId = req.params.id; // Capturar o ID do livro a ser alugado
+  const usuarioId = req.session.usuarioId; // Capturar o ID do usuário logado
+
+  try {
+    const livro = await livros.findByPk(livroId);
+
+    if (!livro) {
+      return res.status(404).send('Livro não encontrado');
+    }
+
+    if (livro.qntdisponivel > 0 && livro.possuidor === 'vazio') {
+      // Atualizar as informações do livro para refletir o aluguel
+      await livro.update({
+        qntdisponivel: livro.qntdisponivel - 1,
+        possuidor: usuarioId
+      });
+      let todosLivros = await livros.findAll();
+      return res.render("home_user",{ livro:todosLivros});
+    } else {
+      let todosLivros = await livros.findAll();
+
+      return res.render("home_user",{ livro:todosLivros});
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Erro ao alugar o livro');
+  }
+};
+
