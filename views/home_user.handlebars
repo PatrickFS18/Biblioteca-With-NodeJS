@@ -83,5 +83,17 @@
    
 
   </body>
+<script>
+  function verificarURL() {
+
+    if (!window.location.href.includes(`/login`)) {
+      const newUrl = `/login`;
+      window.location.href = newUrl;
+    }
+  }
+
+  
+
+</script>
 
 </html>

@@ -6,7 +6,7 @@ const UsuarioLivro = require("../models/usuarioLivro")(sequelize, Sequelize); //
 
 exports.home = (req, res) => {
   // se for admin vv
-    res.render("home", { layout: false });
+  res.render("home", { layout: false });
   //se nao:
   //res.render("home_user", { layout: false });
 };
@@ -14,63 +14,68 @@ exports.home = (req, res) => {
 exports.exibirLivros = async (req, res) => {
   try {
     let livro = await livros.findAll();
-    res.render('home_user', { livro });
+    res.render("home_user", { livro });
   } catch (error) {
     console.error(error);
-    res.status(500).send('Erro ao carregar os livros');
+    res.status(500).send("Erro ao carregar os livros");
   }
 };
 
-
-
-exports.alugarLivro = async (req, res) => {
-  const livroId = req.params.id; 
+exports.alugarLivro = (req, res) => {
+  const livroId = req.params.id;
   // Capturar o ID do livro a ser alugado
-  //const usuarioId = req.session.usuarioId; 
-  const usuarioId = 2; 
+  //const usuarioId = req.session.usuarioId;
+  const usuarioId = 2;
 
-  try {
-    const livro = await livros.findByPk(livroId);
+  livros
+    .findByPk(livroId)
+    .then((livro) => {
+      if (!livro) {
+        return res.status(404).send("Livro não encontrado");
+      }
 
-    if (!livro) {
-      return res.status(404).send('Livro não encontrado');
-    }
+      if (livro.qntdisponivel > 0) {
+        UsuarioLivro.findOne({
+          where: {
+            usuarioId: usuarioId,
+            livroId: livroId,
+          },
+        }).then((usuarioLivro) => {
+          if (usuarioLivro) {
+            livro.update({
+              qntdisponivel: livro.qntdisponivel - 1,
+            });
 
-    if (livro.qntdisponivel > 0) {
-      // Atualizar as informações do livro para refletir o aluguel
-      await livro.update({
-        qntdisponivel: livro.qntdisponivel - 1,
-      });
-       // Atualizar ou criar registro no modelo UsuarioLivro
-       let usuarioLivro = await UsuarioLivro.findOne({
-        where: {
-          usuarioId: usuarioId,
-          livroId: livroId
-        }
-      });
+            usuarioLivro.quantidade += 1;
+            usuarioLivro.save().then(() => {
+              livros.findAll().then((todosLivros) => {
+                return res.render("home_user", { livro: todosLivros });
+              });
+            });
+          } else {
+            livro.update({
+              qntdisponivel: livro.qntdisponivel - 1,
+            });
 
-      if (usuarioLivro) {
-        // Se já existir um registro, incrementar a quantidade
-        UsuarioLivro.quantidade += 1;
-        await UsuarioLivro.save();
+            UsuarioLivro.create({
+              usuarioId: usuarioId,
+              livroId: livroId,
+              quantidade: 1,
+            }).then(() => {
+              livros.findAll().then((todosLivros) => {
+                return res.render("home_user", { livro: todosLivros });
+              });
+            });
+          }
+        });
       } else {
-        // Se não existir, criar um novo registro
-        await UsuarioLivro.create({
-          usuarioId: usuarioId,
-          livroId: livroId,
-          quantidade: 1
+        livros.findAll().then((todosLivros) => {
+          return res.render("home_user", { livro: todosLivros });
         });
       }
-      let todosLivros = await livros.findAll();
-      return res.render("home_user",{ livro:todosLivros});
-    } else {
-      let todosLivros = await livros.findAll();
-
-      return res.render("home_user",{ livro:todosLivros});
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Erro ao alugar o livro');
-  }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Erro ao alugar o livro");
+    });
 };
-
