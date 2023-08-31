@@ -2,7 +2,6 @@ const { sequelize, Sequelize } = require("../config/connection"); // Certifique-
 const livros = require("../models/livro")(sequelize, Sequelize); // Passando os parâmetros necessários
 const UsuarioLivro = require("../models/usuarioLivro")(sequelize, Sequelize); // Passando os parâmetros necessários
 const { Op } = require("sequelize"); // Importando o operador de comparação
-// Resto do código do controller...
 
 exports.home = (req, res) => {
     // se for admin vv
@@ -32,7 +31,8 @@ exports.alugarLivro = (req, res) => {
     const livroId = req.params.id;
     // Capturar o ID do livro a ser alugado
     //const usuarioId = req.session.usuarioId;
-    const usuarioId = 2;
+    const usuarioId = req.session.userId;
+
     const mensagem = encodeURIComponent('livro_alugado');
     const erro = encodeURIComponent('erro');
 

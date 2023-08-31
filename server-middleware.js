@@ -1,11 +1,11 @@
 const express = require('express')
+const session = require('express-session');
 
 const path = require('path')
 const bodyParser = require('body-parser');
 const app = express();
 // added at 08/14/23
 const flash = require('connect-flash');
-const session = require('express-session');
 
 app.use(bodyParser.urlencoded({ extended:false }))
 app.use(bodyParser.json())
@@ -28,7 +28,7 @@ app.engine('handlebars', handlebars.engine({
 app.use(session({
 	secret: "a_any_key_for_this_project",
 	resave: false,
-	saveUninitialized: false
+	saveUninitialized: true
 }))
 app.use(flash())
 
