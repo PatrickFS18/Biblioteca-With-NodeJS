@@ -36,6 +36,9 @@
 
   <body>
     <div id="login">
+      {{#if errorMessage}}
+      <div> {{errorMessage}}</div>
+      {{/if}}
       <div class="container">
         <div
           id="login-row"

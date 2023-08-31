@@ -16,18 +16,30 @@ exports.search = (req, res) => {
 };
 
 
-exports.exibirLivros = async(req, res) => {
+exports.exibirLivros = async (req, res) => {
     try {
-        let livro = await livros.findAll();
-        res.render("home_user", { livro });
-      
+      if (!req.session.userId) {
+        return res.status(401).send("Usuário não autenticado");
+      }
+  
+      const usuarioId = req.session.userId;
+  
+      // Consulta para buscar os livros associados ao usuário pelo ID
+      let livrosDoUsuario = await UsuarioLivro.findAll({
+        where: {
+          usuarioId: usuarioId,
+        },
+      });
+  
+      res.render("home_user", { livro: livrosDoUsuario });
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Erro ao carregar os livros");
+      console.error(error);
+      res.status(500).send("Erro ao carregar os livros");
     }
-};
+  };
+  
 
-exports.alugarLivro = (req, res) => {
+exports.alugarLivro =  (req, res) => {
     const livroId = req.params.id;
     // Capturar o ID do livro a ser alugado
     //const usuarioId = req.session.usuarioId;
@@ -58,7 +70,11 @@ exports.alugarLivro = (req, res) => {
                         usuarioLivro.quantidade += 1;
                         
                         usuarioLivro.save().then(() => {
-                            livros.findAll().then((todosLivros) => {
+                            UsuarioLivro.findAll({
+                                where: {
+                                    usuarioId: usuarioId,
+                                }
+                            }).then((todosLivros) => {
                                 return res.render("home_user", { livro: todosLivros,mensagem:mensagem });
                             });
                         });
@@ -72,14 +88,22 @@ exports.alugarLivro = (req, res) => {
                             livroId: livroId,
                             quantidade: 1,
                         }).then(() => {
-                            livros.findAll().then((todosLivros) => {
+                            UsuarioLivro.findAll({
+                                where: {
+                                    usuarioId: usuarioId,
+                                }
+                            }).then((todosLivros) => {
                                 return res.render("home_user", { livro: todosLivros,mensagem:mensagem });
                             });
                         });
                     }
                 });
             } else {
-                livros.findAll().then((todosLivros) => {
+                UsuarioLivro.findAll({
+                    where: {
+                        usuarioId: usuarioId,
+                    }
+                }).then((todosLivros) => {
                     return res.render("home_user", { livro: todosLivros,erro:erro });
                 });
             }

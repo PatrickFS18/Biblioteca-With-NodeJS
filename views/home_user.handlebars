@@ -119,7 +119,7 @@
     </a>
   </div>
  <div style="text-align: center;margin-bottom:5em">
-              <h2 class="mt-4">Seus livros aqui, {{ user }}. </h2>
+              <h2 class="mt-4">Seus livros aqui, {{ usern.nome }}. </h2>
               <h4>Uma ótima leitura!</h4>
 
 </div>
@@ -127,7 +127,7 @@
 
     <div class="container">
         
-
+{{#if livro}}
 {{#if mensagem}}
   <div id="mensagem" class="alert alert-success" style="display:block;">Livro alugado com Sucesso!</div>
 {{/if}}
@@ -135,36 +135,27 @@
         <thead>
           <tr>
             <th scope="col">Título</th>
+            <th scope="col">Autores</th>
             <th scope="col">Ano</th>
-            <th scope="col">Quantidade Disponível</th>
-            <th scope="col">Ação</th>
+            <th scope="col">Editora</th>
           </tr>
         </thead>
         <tbody>
+
           {{#each livro}}
             <tr>
               <td>{{titulo}}</td>
+              <td>{{autores}}</td>
               <td>{{ano}}</td>
-              <td>{{qntdisponivel}}</td>
-              <td>
-                {{#if qntdisponivel}}
-                <form action="/alugar_livro/{{ this.id }}" method="post">
-                  <button
-                    class="btn btn-primary"
-                   type="submit"
-                  >Alugar</button>
-                  </form>
-                {{else}}
-                  <span class="text-danger">Não Disponível</span>
-                {{/if}}
-              </td>{{#each livros}}
-  
-  </form>
-{{/each}}
+              <td>{{editora}}</td>
+              
             </tr>
           {{/each}}
         </tbody>
       </table>
+{{else}}
+<div>Você não possui livros!</div>
+{{/if}}
     </div>
 
 
