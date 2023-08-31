@@ -21,6 +21,7 @@ exports.exibirLivros = async(req, res) => {
     try {
         let livro = await livros.findAll();
         res.render("home_user", { livro });
+      
     } catch (error) {
         console.error(error);
         res.status(500).send("Erro ao carregar os livros");
@@ -32,6 +33,8 @@ exports.alugarLivro = (req, res) => {
     // Capturar o ID do livro a ser alugado
     //const usuarioId = req.session.usuarioId;
     const usuarioId = 2;
+    const mensagem = encodeURIComponent('livro_alugado');
+    const erro = encodeURIComponent('erro');
 
     livros
         .findByPk(livroId)
@@ -53,9 +56,10 @@ exports.alugarLivro = (req, res) => {
                         });
 
                         usuarioLivro.quantidade += 1;
+                        
                         usuarioLivro.save().then(() => {
                             livros.findAll().then((todosLivros) => {
-                                return res.render("home_user", { livro: todosLivros });
+                                return res.render("home_user", { livro: todosLivros,mensagem:mensagem });
                             });
                         });
                     } else {
@@ -69,14 +73,14 @@ exports.alugarLivro = (req, res) => {
                             quantidade: 1,
                         }).then(() => {
                             livros.findAll().then((todosLivros) => {
-                                return res.render("home_user", { livro: todosLivros });
+                                return res.render("home_user", { livro: todosLivros,mensagem:mensagem });
                             });
                         });
                     }
                 });
             } else {
                 livros.findAll().then((todosLivros) => {
-                    return res.render("home_user", { livro: todosLivros });
+                    return res.render("home_user", { livro: todosLivros,erro:erro });
                 });
             }
         })

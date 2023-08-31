@@ -40,7 +40,9 @@
               <h1 class="mt-4">Biblioteca</h1>
 </div>
 
-
+{{#if mensagem}}
+  <div id="mensagem" class="alert alert-success" style="display:block;">Livro alugado com Sucesso!</div>
+{{/if}}
       <table class="table table-striped">
         <thead>
           <tr>
@@ -88,12 +90,20 @@
 
     if (!window.location.href.includes(`/login`)) {
       const newUrl = `/login`;
+      
+       setTimeout(function () {
+      document.getElementById("mensagem").style.display = 'none';
       window.location.href = newUrl;
+
+    }, 3000); // 3000 milissegundos = 3 segundos
+
     }
   }
- window.onload = verificarURL;
-  
+  window.onload=verificarURL;
 
 </script>
 
+<script>
+  
+</script>
 </html>

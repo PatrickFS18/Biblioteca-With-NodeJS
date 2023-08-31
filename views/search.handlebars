@@ -1,123 +1,121 @@
 <!-- views/search.html -->
-<!DOCTYPE html>
+
 <html>
 
-<head>
+  <head>
     <title>Busca de Livros</title>
-    <link rel="stylesheet" href="/styles.css"> <!-- Adicione o link para seu arquivo de estilo CSS -->
-    <style>/* styles.css */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f7f7f7;
-}
+    <link rel="stylesheet" href="/styles.css" />
+    <!-- Adicione o link para seu arquivo de estilo CSS -->
+    <style>/* styles.css */ body { font-family: Arial, sans-serif; margin: 0;
+      padding: 0; background-color: #f7f7f7; } .container { max-width: 400px;
+      margin: 0 auto; padding: 20px; background-color: #ffffff; box-shadow: 0
+      4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px; text-align: center; }
+      .title { color: #333; margin-bottom: 20px; } .search-input { padding:
+      10px; width: 100%; border: 1px solid #ccc; border-radius: 4px;
+      margin-bottom: 10px; } .search-button, .sort-button { background-color:
+      #007bff; color: white; padding: 10px 20px; border: none; border-radius:
+      4px; cursor: pointer; transition: background-color 0.2s; }
+      .search-button:hover, .sort-button:hover { background-color: #0056b3; }
+      button { outline: none; } table { border-collapse: collapse; width: 100%;
+      } th, td { border: 1px solid black; padding: 8px; text-align: left; } th {
+      background-color: #f2f2f2; }
 
-.container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  text-align: center;
-}
+    </style>
+  </head>
 
-.title {
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.search-input {
-  padding: 10px;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 10px;
-}
-
-.search-button, .sort-button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.search-button:hover, .sort-button:hover {
-  background-color: #0056b3;
-}
-
-button {
-  outline: none;
-}
-
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    th, td {
-      border: 1px solid black;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-</style>
-</head>
-
-<body>
+  <body>
     <div class="container">
-        <h1 class="title">Busca de Livros</h1>
-        <form action="/buscar" method="POST">
-            <input type="text" class="search-input" name="titulo" placeholder="Digite parte do título">
-            <button type="submit" class="search-button">Buscar</button>
-        </form>
-        <form action="/ordenar" method="POST">
-            <button type="submit" class="sort-button">Ordenar por Ano</button>
-        </form>
+      <h1 class="title">Busca de Livros</h1>
+      <form action="/buscar" method="POST">
+        <input
+          type="text"
+          class="search-input"
+          name="titulo"
+          placeholder="Digite parte do título"
+        />
+        <button type="submit" class="search-button">Buscar</button>
+      </form>
+      <form action="/ordenar" method="POST">
+        <button type="submit" class="sort-button">Ordenar por Ano</button>
+      </form>
     </div>
-    <div class="table-container">
+    {{#if livrosEncontrados}}
+      <div class="table-container">
+
         <h2>Resultado da Busca por Título</h2>
         <table>
+          <tr>
+            <th>Título</th>
+            |
+            <th>Autores</th>
+            |
+            <th>Ano</th>
+            <th>Quantidade Disponível</th>
+            <th>Aluguel</th>
+
+          </tr>
+          {{#each livrosEncontrados}}
             <tr>
-                <th>Título</th>
-                <th>Autores</th>
-                <th>Ano</th>
-                <th>Editora</th>
+              <td>{{this.titulo}}</td>
+              <td>{{this.autores}}</td>
+
+              <td>{{this.ano}}</td>
+              <td>{{this.qntdisponivel}}</td>
+              <td>
+                {{#if this.qntdisponivel}}
+                  <form action="/alugar_livro/{{this.id}}" method="post">
+                    <button
+                      class="sort-button"
+                      type="submit"
+                      style="background-color:rgb(13, 163, 13);"
+                    >Alugar</button>
+                  </form>
+                {{else}}
+                  <span class="text-danger">Não Disponível</span>
+                {{/if}}
+              </td>
             </tr>
-            {{#each livrosEncontrados}}
-            <tr>
-                <td>{{this.titulo}}</td>
-                <td>{{this.autores}}</td>
-                <td>{{this.ano}}</td>
-                <td>{{this.editora}}</td>
-            </tr>
-            {{/each}}
+          {{/each}}
         </table>
-    </div>
-    <div class="table-container">
+      </div>
+    {{/if}}
+    {{#if livrosOrdenadosPorAno}}
+      <div class="table-container">
         <h2>Resultado da Busca Ordenada por Ano</h2>
         <table>
+          <tr>
+            <th>Título</th>
+            <th>Autores</th>
+            <th>Ano</th>
+            <th>Quantidade Disponível</th>
+            <th>Aluguel</th>
+          </tr>
+          {{#each livrosOrdenadosPorAno}}
             <tr>
-                <th>Título</th>
-                <th>Autores</th>
-                <th>Ano</th>
-                <th>Editora</th>
-            </tr>
-            {{#each livrosOrdenadosPorAno}}
-            <tr>
-                <td>{{this.titulo}}</td>
-                <td>{{this.autores}}</td>
-                <td>{{this.ano}}</td>
-                <td>{{this.editora}}</td>
-            </tr>
-            {{/each}}
-        </table>
-    </div>
-</body>
+              <td>{{this.titulo}}</td>
+              <td>{{this.autores}}</td>
 
+              <td>{{this.ano}}</td>
+              <td>{{this.qntdisponivel}}</td>
+              <td>
+                {{#if this.qntdisponivel}}
+                  <form action="/alugar_livro/{{this.id}}" method="post">
+                    <button
+                      class="sort-button"
+                      type="submit"
+                      style="background-color:rgb(13, 163, 13);"
+                    >Alugar</button>
+                  </form>
+                {{else}}
+                  <span class="text-danger">Não Disponível</span>
+                {{/if}}
+              </td>
+            </tr>
+          {{/each}}
+        </table>
+      </div>
+    {{/if}}
+
+  </body>
+  
 </html>
