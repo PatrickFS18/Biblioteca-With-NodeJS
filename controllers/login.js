@@ -27,21 +27,45 @@ exports.login = async (req, res) => {
     if (user.nome == "admin") {
       res.render("home", { layout: false });
     } else {
-
+      // Consulta para buscar os livros associados ao usuário pelo ID
+      const usuarioId = req.session.userId;
+      let username = await usuario.findOne({
+        where: {
+          id: usuarioId,
+        },
+      });
 
       // Consulta para buscar os livros associados ao usuário pelo ID
       let livrosDoUsuario = await usuario_livro.findAll({
         where: {
-          usuarioId: user.id,
+          usuarioId: usuarioId,
         },
       });
 
-      if(livrosDoUsuario>0){
-      res.render("home_user", { livro: livrosDoUsuario, usern:user });
-    }else{
-      res.render("home_user", {  usern:user });
+      // Criar uma matriz para armazenar os nomes dos livros
+      const nomesDosLivros = [];
 
-    }
+      // Iterar pelos resultados para buscar os nomes dos livros
+      for (const livroDoUsuario of livrosDoUsuario) {
+        let livrox = await livros.findOne({
+          where: {
+            id: livroDoUsuario.livroId,
+          },
+        });
+
+        // Verificar se o livro foi encontrado
+        if (livrox) {
+          nomesDosLivros.push({
+            titulo: livrox.titulo,
+            autores: livrox.autores,
+            ano: livrox.ano,
+            editora: livrox.editora,
+          });
+        }
+      }
+      
+      return res.render("home_user", { livro: nomesDosLivros,usern: username });
+
     }
   } catch (error) {
     console.error("Erro ao processar o login:", error);

@@ -144,13 +144,14 @@
 
           {{#each livro}}
             <tr>
-              <td>{{titulo}}</td>
-              <td>{{autores}}</td>
-              <td>{{ano}}</td>
-              <td>{{editora}}</td>
+              <td>{{this.titulo}}</td>
+              <td>{{this.autores}}</td>
+              <td>{{this.ano}}</td>
+              <td>{{this.editora}}</td>
               
             </tr>
-          {{/each}}
+                    {{/each}}
+
         </tbody>
       </table>
 {{else}}
@@ -170,7 +171,7 @@
       document.getElementById("mensagem").style.display = 'none';
       window.location.href = newUrl;
 
-    }, 3000); // 3000 milissegundos = 3 segundos
+    }, 1800); // 1800 milissegundos = 1.8 segundos
 
     }
   }

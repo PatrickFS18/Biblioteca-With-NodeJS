@@ -1,31 +1,34 @@
 module.exports = (sequelize, DataTypes) => {
-  const livros = sequelize.define('livros', {
+  const livros = sequelize.define("livros", {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     titulo: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     autores: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     ano: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
     },
     editora: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
-    qntdisponivel:{
+    qntdisponivel: {
       type: DataTypes.INTEGER,
-      allowNull: false
-    }
+      allowNull: false,
+    },
   });
+  livros.associate = (models) => {
+    livros.hasMany(models.UsuarioLivro, { foreignKey: "livroId" });
+  };
   //livros.sync ({force:true})
   return livros;
 };

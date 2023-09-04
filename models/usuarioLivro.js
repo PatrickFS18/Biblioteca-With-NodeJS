@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
+  UsuarioLivro.associate = (models) => {
+    UsuarioLivro.belongsTo(models.Usuario, { foreignKey: 'usuarioId' });
+    UsuarioLivro.belongsTo(models.Livro, { foreignKey: 'livroId' });
+  };
  // UsuarioLivro.sync({force:true});
   return UsuarioLivro;
 };
