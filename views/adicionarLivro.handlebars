@@ -10,9 +10,6 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
-
-            justify-content: center;
-
         }
 
         /* Estilos para o cabeçalho (navbar) */
@@ -38,8 +35,14 @@
         /* Estilos para o conteúdo da página */
         .content {
             padding: 20px;
+            display: flex;
+            justify-content: center;
+            /* Centralizar horizontalmente */
+            align-items: center;
+            /* Centralizar verticalmente */
+            min-height: calc(100vh - 80px);
+            /* Descontar altura da navbar */
         }
-
 
         .container {
             background-color: #fff;
@@ -86,35 +89,34 @@
 
 <body>
     <div class="navbar">
-        <a href="/login">Home</a>
+        <a href="/admin">Home</a>
         <a href="/adicionar_livro">Adicionar Livros</a>
         <a href="/administrar">Administrar</a>
         <a href="/"> <b style="color:red">Logout</b> </a>
     </div>
 
-    <div class="content" style="display: flex;">
+    <div class="content">
+        <div class="container">
+            <h1 style="margin-bottom:1em;">Adicionar Livro</h1>
+            <form action="/adicionar_livro" method="post">
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" name="titulo" required><br><br>
 
+                <label for="autores">Autores:</label>
+                <input type="text" id="autores" name="autores" required><br><br>
 
-        <h1 style="margin-bottom:1em;">Adicionar Livro</h1>
+                <label for="ano">Ano:</label>
+                <input type="number" id="ano" name="ano" required><br><br>
 
-        <form action="/adicionar_livro" method="post">
-            <label for="titulo">Título:</label>
-            <input type="text" id="titulo" name="titulo" required><br><br>
+                <label for="editora">Editora:</label>
+                <input type="text" id="editora" name="editora" required><br><br>
 
-            <label for="autores">Autores:</label>
-            <input type="text" id="autores" name="autores" required><br><br>
+                <label for="qntdisponivel">Quantidade Disponível:</label>
+                <input type="number" id="qntdisponivel" name="qntdisponivel" required><br><br>
 
-            <label for="ano">Ano:</label>
-            <input type="number" id="ano" name="ano" required><br><br>
-
-            <label for="editora">Editora:</label>
-            <input type="text" id="editora" name="editora" required><br><br>
-
-            <label for="qntdisponivel">Quantidade Disponível:</label>
-            <input type="number" id="qntdisponivel" name="qntdisponivel" required><br><br>
-
-            <input type="submit" value="Adicionar Livro">
-        </form>
+                <input type="submit" value="Adicionar Livro">
+            </form>
+        </div>
     </div>
 </body>
 

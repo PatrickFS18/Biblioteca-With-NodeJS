@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-  <head>
-    <title>Busca de Livros</title>
-    <meta charset="UTF-8">
+<head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    />
+  <title>Busca de Livros</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
 
-    <style>
-    body {
-      font-family: Arial, sans-serif;
+  <style>
+    /* Reset CSS básico */
+    body,
+    h1,
+    h2,
+    h3,
+    p,
+    ul,
+    li {
       margin: 0;
       padding: 0;
-      background-color: #f7f7f7;
     }
 
+    /* Estilos para o corpo da página */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Estilos para a navbar */
     .navbar {
       background-color: #333;
       overflow: hidden;
@@ -38,17 +48,9 @@
       color: black;
     }
 
+    /* Estilos para os contêineres */
+    .container,
     .container-form {
-      max-width: 40%;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #ffffff;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      text-align: center;
-      margin-top: 50px;
-    }
-    .container {
       max-width: 70%;
       margin: 0 auto;
       padding: 20px;
@@ -59,11 +61,17 @@
       margin-top: 50px;
     }
 
+    .container-form {
+      max-width: 40%;
+    }
+
+    /* Estilos para o título */
     .title {
       color: #333;
       margin-bottom: 20px;
     }
 
+    /* Estilos para os campos de entrada e botões */
     .search-input {
       padding: 10px;
       width: 100%;
@@ -81,6 +89,8 @@
       border-radius: 4px;
       cursor: pointer;
       transition: background-color 0.2s;
+      margin-right: 10px;
+      /* Espaço entre os botões */
     }
 
     .search-button:hover,
@@ -88,13 +98,11 @@
       background-color: #0056b3;
     }
 
-    button {
-      outline: none;
-    }
-
+    /* Estilos para tabelas */
     table {
       border-collapse: collapse;
       width: 100%;
+      margin-top: 20px;
     }
 
     th,
@@ -107,110 +115,102 @@
     th {
       background-color: #f2f2f2;
     }
+
+    /* Estilos para o botão de aluguel */
+    .alugar-button {
+      background-color: rgb(13, 163, 13);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* Estilos para o texto de "Não Disponível" */
+    .text-danger {
+      color: red;
+    }
   </style>
-  </head>
+</head>
 
-  <body>
-    <div class="navbar">
-        <a href="/login">Home</a>
-      <a href="/"> <b style="color:red">Logout</b> </a>
-    </div>
+<body>
+  <div class="navbar">
+    <a href="/login">Home</a>
+    <a href="/"> <b style="color:red">Logout</b> </a>
+  </div>
 
-    
-    <div class="container">
-       
-    <div class="container-form">
-      <h1 class="title">Busca de Livros</h1>
-      <form action="/buscar" method="POST">
-        <input
-          type="text"
-          class="search-input"
-          name="titulo"
-          placeholder="Digite parte do título"
-        />
-        <button type="submit" class="search-button">Buscar</button>
-      </form>
-      <form action="/ordenar" method="POST">
-        <button type="submit" class="sort-button">Ordenar por Ano</button>
-      </form>
-    </div>
-    {{#if livrosEncontrados}}
-      <div class="table-container">
+  <div class="container-form">
+    <h1 class="title">Busca de Livros</h1>
+    <form action="/buscar" method="POST">
+      <input type="text" class="search-input" name="titulo" placeholder="Digite parte do título" />
+      <button type="submit" class="search-button">Buscar</button>
+    </form>
+    <form action="/ordenar" method="POST">
+      <button type="submit" class="sort-button">Ordenar por Ano</button>
+    </form>
+  </div>
+  {{#if livrosEncontrados}}
+  <div class="container">
+    <h2>Resultado da Busca por Título</h2>
+    <table>
+      <tr>
+        <th>Título</th>
+        <th>Autores</th>
+        <th>Ano</th>
+        <th>Quantidade Disponível</th>
+        <th>Aluguel</th>
+      </tr>
+      {{#each livrosEncontrados}}
+      <tr>
+        <td>{{this.titulo}}</td>
+        <td>{{this.autores}}</td>
+        <td>{{this.ano}}</td>
+        <td>{{this.qntdisponivel}}</td>
+        <td>
+          {{#if this.qntdisponivel}}
+          <form action="/alugar_livro/{{this.id}}" method="post">
+            <button class="alugar-button" type="submit">Alugar</button>
+          </form>
+          {{else}}
+          <span class="text-danger">Não Disponível</span>
+          {{/if}}
+        </td>
+      </tr>
+      {{/each}}
+    </table>
+  </div>
+  {{/if}}
+  {{#if livrosOrdenadosPorAno}}
+  <div class="container">
+    <h2>Resultado da Busca ordenada por Ano</h2>
+    <table>
+      <tr>
+        <th>Título</th>
+        <th>Autores</th>
+        <th>Ano</th>
+        <th>Quantidade Disponível</th>
+        <th>Aluguel</th>
+      </tr>
+      {{#each livrosOrdenadosPorAno}}
+      <tr>
+        <td>{{this.titulo}}</td>
+        <td>{{this.autores}}</td>
+        <td>{{this.ano}}</td>
+        <td>{{this.qntdisponivel}}</td>
+        <td>
+          {{#if this.qntdisponivel}}
+          <form action="/alugar_livro/{{this.id}}" method="post">
+            <button class="alugar-button" type="submit">Alugar</button>
+          </form>
+          {{else}}
+          <span class="text-danger">Não Disponível</span>
+          {{/if}}
+        </td>
+      </tr>
+      {{/each}}
+    </table>
+  </div>
+  {{/if}}
+</body>
 
-        <h2>Resultado da Busca por Título</h2>
-        <table>
-          <tr>
-            <th>Título</th>
-            
-            <th>Autores</th>
-            
-            <th>Ano</th>
-            <th>Quantidade Disponível</th>
-            <th>Aluguel</th>
-
-          </tr>
-          {{#each livrosEncontrados}}
-            <tr>
-              <td>{{this.titulo}}</td>
-              <td>{{this.autores}}</td>
-
-              <td>{{this.ano}}</td>
-              <td>{{this.qntdisponivel}}</td>
-              <td>
-                {{#if this.qntdisponivel}}
-                  <form action="/alugar_livro/{{this.id}}" method="post">
-                    <button
-                      class="sort-button"
-                      type="submit"
-                      style="background-color:rgb(13, 163, 13);"
-                    >Alugar</button>
-                  </form>
-                {{else}}
-                  <span class="text-danger">Não Disponível</span>
-                {{/if}}
-              </td>
-            </tr>
-          {{/each}}
-        </table>
-      </div>
-    {{/if}}
-    {{#if livrosOrdenadosPorAno}}
-      <div class="table-container">
-        <h2>Resultado da Busca ordenada por Ano</h2>
-        <table>
-          <tr>
-            <th>Título</th>
-            <th>Autores</th>
-            <th>Ano</th>
-            <th>Quantidade Disponível</th>
-            <th>Aluguel</th>
-          </tr>
-          {{#each livrosOrdenadosPorAno}}
-            <tr>
-              <td>{{this.titulo}}</td>
-              <td>{{this.autores}}</td>
-
-              <td>{{this.ano}}</td>
-              <td>{{this.qntdisponivel}}</td>
-              <td>
-                {{#if this.qntdisponivel}}
-                  <form action="/alugar_livro/{{this.id}}" method="post">
-                    <button
-                      class="sort-button"
-                      type="submit"
-                      style="background-color:rgb(13, 163, 13);"
-                    >Alugar</button>
-                  </form>
-                {{else}}
-                  <span class="text-danger">Não Disponível</span>
-                {{/if}}
-              </td>
-            </tr>
-          {{/each}}
-        </table>
-      </div>
-    {{/if}}
-
-  </body>
-  
 </html>

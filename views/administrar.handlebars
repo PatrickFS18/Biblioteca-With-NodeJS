@@ -2,20 +2,29 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dashboard</title>
     <style>
+        /* Reset CSS básico */
+        body,
+        h1,
+        h2,
+        h3,
+        p,
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+        }
+
         /* Estilos para o corpo da página */
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             background-color: #f4f4f4;
-
-            justify-content: center;
-
         }
 
-        /* Estilos para o cabeçalho (navbar) */
+        /* Estilos para a navbar */
         .navbar {
             background-color: #333;
             overflow: hidden;
@@ -36,196 +45,157 @@
         }
 
         /* Estilos para o conteúdo da página */
-        .content {
-            padding: 20px;
-        }
-
-
         .container {
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: 400px;
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
         }
 
-        .container h1 {
-            margin-top: 0;
+        h1 {
+            margin-top: 2em;
+            margin-left:24em;
+            margin-bottom:2em;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="number"] {
+        /* Estilos para tabelas */
+        table {
+            border-collapse: collapse;
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
         }
 
-        input[type="submit"] {
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        button {
             background-color: #007bff;
-            color: #fff;
+            color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 5px 10px;
             border-radius: 3px;
             cursor: pointer;
         }
 
-        input[type="submit"]:hover {
+        button:hover {
             background-color: #0056b3;
         }
-        table {
-      border-collapse: collapse;
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    /* Estilo para o cabeçalho da tabela */
-    th {
-      background-color: #f2f2f2;
-      text-align: left;
-      padding: 10px;
-    }
-
-    /* Estilo para as células da tabela */
-    td {
-      padding: 8px;
-      border-bottom: 1px solid #ddd;
-    }
-
-    /* Estilo para linhas alternadas */
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-
-    /* Estilo para botões na tabela */
-    button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 3px;
-      cursor: pointer;
-    }
-
-    /* Responsividade para a tabela */
-    @media screen and (max-width: 600px) {
-      table {
-        font-size: 14px;
-      }
-      th, td {
-        padding: 5px;
-      }
-      button {
-        font-size: 12px;
-      }
-    }
     </style>
 </head>
 
 <body>
     <div class="navbar">
-        <a href="/login">Home</a>
+        <a href="/admin">Home</a>
         <a href="/adicionar_livro">Adicionar Livros</a>
         <a href="/administrar">Administrar</a>
-        <a href="/"> <b style="color:red">Logout</b> </a>
+        <a href="/"><b style="color:red">Logout</b></a>
+    </div>
+<h1>Painel de Administração</h1>
+    <div class="container">
+        
+        <h2>Lista de Usuários</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each usuarios}}
+                <tr>
+                    <td>{{nome}}</td>
+                    <td>{{email}}</td>
+                    <td><button onclick="excluirUsuario('{{id}}')">Excluir</button></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
     </div>
 
-    <h1>Painel de Administração</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each usuarios}}
+    <div class="container">
+        <h2>Lista de Livros</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Ano</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each livro}}
+                <tr>
+                    <td>{{titulo}}</td>
+                    <td>{{ano}}</td>
+                    <td><button onclick="excluirLivro('{{id}}')">Excluir</button></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
 
-            <tr>
-                <td>{{nome}}</td>
-                <td>{{email}}</td>
-                <td><button onclick="excluirUsuario('{{id}}')">Excluir</button></td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Ano</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each livro}}
-            <tr>
-                <td>{{titulo}}</td>
-                <td>{{ano}}</td>
-                <td><button onclick="excluirLivro('{{id}}')">Excluir</button></td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-</body>
-<script>
-
-  
-            async function excluirUsuario(id) {
-    const confirmed = confirm("Tem certeza que deseja excluir este usuário?");
+    <script>
+        async function excluirUsuario(id) {
+            const confirmed = confirm("Tem certeza que deseja excluir este usuário?");
             if (!confirmed) {
-      return;
-    }
+                return;
+            }
 
             try {
-      const response = await fetch(`/excluir_usuario/${id}`, {
-        method: 'DELETE'
-      });
+                const response = await fetch(`/excluir_usuario/${id}`, {
+                    method: 'DELETE'
+                });
 
-      if (response.ok) {
-        // Atualize a página ou realize alguma ação após a exclusão
-        location.reload();
-      } else {
-        console.error('Erro ao excluir usuário');
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-</script>
-
-<script>
-    async function excluirLivro(id) {
-        const confirmed = confirm("Tem certeza que deseja excluir este livro?");
-        if (!confirmed) {
-            return;
-        }
-
-        try {
-            const response = await fetch(`/excluir_livro/${id}`, {
-                method: 'DELETE'
-            });
-
-            if (response.ok) {
-                // Atualize a página ou realize alguma ação após a exclusão
-                location.reload();
-            } else {
-                console.error('Erro ao excluir livro');
+                if (response.ok) {
+                    // Atualize a página ou realize alguma ação após a exclusão
+                    location.reload();
+                } else {
+                    console.error('Erro ao excluir usuário');
+                }
+            } catch (error) {
+                console.error(error);
             }
-        } catch (error) {
-            console.error(error);
         }
-    }
-</script>
+    </script>
+
+    <script>
+        async function excluirLivro(id) {
+            const confirmed = confirm("Tem certeza que deseja excluir este livro?");
+            if (!confirmed) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/excluir_livro/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    // Atualize a página ou realize alguma ação após a exclusão
+                    location.reload();
+                } else {
+                    console.error('Erro ao excluir livro');
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+
 </html>
