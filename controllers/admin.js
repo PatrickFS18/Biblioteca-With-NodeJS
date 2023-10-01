@@ -2,10 +2,9 @@ const { sequelize, Sequelize } = require("../config/connection"); // Certifique-
 const livros = require("../models/livro")(sequelize, Sequelize); // Passando os parâmetros necessários
 const usuario = require("../models/usuario")(sequelize, Sequelize); // Passando os parâmetros necessários
 const { Op } = require('sequelize');
-// Resto do código do controller...
 
 exports.home = (req, res) => {
-    res.render("administrar", { layout: false });
+    res.render("home", { layout: false });
 };
 
 exports.adicionar_home = (req, res) => {

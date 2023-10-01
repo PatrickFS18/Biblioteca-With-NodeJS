@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+    <style>
+        /* Reset CSS básico */
+        body,
+        h1,
+        h2,
+        h3,
+        p,
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilos para o corpo da página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Estilos para a navbar */
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        /* Estilos para o conteúdo da página */
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        h1 {
+            margin-top: 2em;
+            margin-left:24em;
+            margin-bottom:2em;
+        }
+
+        /* Estilos para tabelas */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    #button {
+            background-color: #57d508;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+         form {
+      width: 300px;
+      margin: 0 auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="/admin">Home</a>
+        <a href="/adicionar_livro">Adicionar Livros</a>
+        <a href="/administrar">Administrar</a>
+        <a href="/"><b style="color:red">Logout</b></a>
+    </div>
+
+    <div style="text-align: center;" class="container">
+        <h2 style="margin-bottom:2em">Editar Livro</h2>
+        <table>
+            <thead>
+               
+            </thead>
+            <tbody>
+                
+                   <form action="/editarLivro" method="POST">
+  <label for="titulo">Título:</label>
+  <input name="livroId" value="{{livro.id}}" type="hidden">
+  <input name="titulo" type="text" value="{{livro.titulo}}"><br>
+
+  <label for="autores">Autores:</label>
+  <input name="autores" type="text" value="{{livro.autores}}"><br>
+
+  <label for="ano">Ano:</label>
+  <input name="ano" type="text" value="{{livro.ano}}"><br>
+
+  <label for="editora">Editora:</label>
+  <input name="editora" type="text" value="{{livro.editora}}"><br>
+
+  <label for="qntdisponivel">Quantidade Disponível:</label>
+  <input name="qntdisponivel" type="text" value="{{livro.qntdisponivel}}"><br>
+
+  <input type="submit" value="Editar Livro">
+</form>
+
+
+                 
+             
+            </tbody>
+        </table>
+    </div>
+
+   
+</body>
+
+</html>

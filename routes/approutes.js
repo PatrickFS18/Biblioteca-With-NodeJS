@@ -12,6 +12,8 @@ router.get("/search", myController.search);
 router.get("/", login.home); // "/" é login
 router.get("/register", register.home); // "/register" é registro
 router.get("/login", myController.exibirLivros); // "/login" é logado
+router.get("/admin", admin.home); // "/login" é logado
+router.get('/editarLivro/:id', myController.editarLivro);
 
 router.get("/adicionar_livro", admin.adicionar_home);
 router.get("/administrar", admin.administrar_home);
@@ -28,6 +30,7 @@ router.post('/alugar_livro/:id', myController.alugarLivro);
 
 router.delete('/excluir_usuario/:id', admin.excluirUsuario);
 router.delete('/excluir_livro/:id', admin.excluirLivro);
+router.post('/editarLivro', myController.editar);
 
 
 

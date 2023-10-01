@@ -190,3 +190,49 @@ exports.buscarPorAno = async (req, res) => {
     res.status(500).send("Erro ao buscar por ano");
   }
 };
+
+
+exports.editarLivro = async (req, res) => {
+  
+  try {
+    const livroId = req.params.id;
+    const livro = await livros.findOne({
+      where: {
+        id: livroId,
+      },
+    });
+    res.render("editarLivro",{livro:livro});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Ocorreu um erro ao editar o livro.' });
+  }
+};
+
+exports.editar = async (req, res) => {
+  try {
+    const { livroId,titulo, autores, ano, editora, qntdisponivel } = req.body; 
+
+    const livroExistente = await livros.findOne({
+      where: {
+        id: livroId,
+      },
+    });
+
+    if (!livroExistente) {
+      return res.status(404).json({ error: 'Livro não encontrado.' });
+    }
+
+    livroExistente.titulo = titulo;
+    livroExistente.autores = autores;
+    livroExistente.ano = ano;
+    livroExistente.editora = editora;
+    livroExistente.qntdisponivel = qntdisponivel;
+
+    await livroExistente.save();
+
+    return res.redirect('/administrar');
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Ocorreu um erro ao editar o livro.' });
+  }
+};
