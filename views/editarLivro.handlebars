@@ -152,19 +152,19 @@
                    <form action="/editarLivro" method="POST">
   <label for="titulo">Título:</label>
   <input name="livroId" value="{{livro.id}}" type="hidden">
-  <input name="titulo" type="text" value="{{livro.titulo}}"><br>
+  <input name="titulo" type="text" value="{{livro.titulo}}" required><br>
 
   <label for="autores">Autores:</label>
-  <input name="autores" type="text" value="{{livro.autores}}"><br>
+  <input name="autores" type="text" value="{{livro.autores}}" required><br>
 
   <label for="ano">Ano:</label>
-  <input name="ano" type="text" value="{{livro.ano}}"><br>
+  <input name="ano" type="text" value="{{livro.ano}}" required><br>
 
   <label for="editora">Editora:</label>
-  <input name="editora" type="text" value="{{livro.editora}}"><br>
+  <input name="editora" type="text" value="{{livro.editora}}" required><br>
 
   <label for="qntdisponivel">Quantidade Disponível:</label>
-  <input name="qntdisponivel" type="text" value="{{livro.qntdisponivel}}"><br>
+  <input name="qntdisponivel" type="text" value="{{livro.qntdisponivel}}" required><br>
 
   <input type="submit" value="Editar Livro">
 </form>
