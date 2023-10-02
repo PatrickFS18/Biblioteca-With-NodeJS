@@ -30,7 +30,7 @@ router.post('/alugar_livro/:id', myController.alugarLivro);
 
 router.delete('/excluir_usuario/:id', admin.excluirUsuario);
 router.delete('/excluir_livro/:id', admin.excluirLivro);
-router.post('/editarLivro', myController.editar);
+router.post('/editarLivro', admin.editar);
 
 
 

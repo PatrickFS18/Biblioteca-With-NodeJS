@@ -126,7 +126,7 @@
    
 
     <div class="container">
-        
+      {{!-- IF Verifica se alugou o livro, se sim, retorna messagem de sucesso --}}
 {{#if livro}}
 {{#if mensagem}}
   <div id="mensagem" class="alert alert-success" style="display:block;">Livro alugado com Sucesso!</div>
@@ -159,9 +159,10 @@
 {{/if}}
     </div>
 
-
+{{!-- Script para verrificar a url --}}
   </body>
 <script>
+  
   function verificarURL() {
 
     if (!window.location.href.includes(`/login`)) {
